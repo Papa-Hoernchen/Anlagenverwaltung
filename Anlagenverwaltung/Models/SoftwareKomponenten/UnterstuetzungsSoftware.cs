@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Anlagenverwaltung.Models.SoftwareKomponenten
 {
-    public class UnterstuetzungsSoftware
+    public class Unterstuetzungssoftware : Software
     {
     }
 }

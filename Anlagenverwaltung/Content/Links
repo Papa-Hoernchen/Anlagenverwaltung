@@ -1,6 +1,9 @@
 ﻿Vererbung(abstrakte Klasse) in Entity Framework:
-https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/implementing-inheritance-with-the-entity-framework-in-an-asp-net-mvc-application
-
+https://weblogs.asp.net/manavi/inheritance-mapping-strategies-with-entity-framework-code-first-ctp5-part-3-table-per-concrete-type-tpc-and-choosing-strategy-guidelines
 N:M Beziehung Entity Framework
-https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/implementing-inheritance-with-the-entity-framework-in-an-asp-net-mvc-application
-
+https://www.entityframeworktutorial.net/code-first/configure-many-to-many-relationship-in-code-first.aspx
+Datenbank neu aufsetzen
+https://stackoverflow.com/questions/20304058/how-to-re-create-database-for-entity-framework
+AutoMapper abstract class
+https://stackoverflow.com/questions/7748517/abstract-classes-with-automapper
+https://docs.automapper.org/en/stable/Mapping-inheritance.htmls

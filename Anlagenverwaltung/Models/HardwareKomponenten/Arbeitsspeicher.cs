@@ -10,6 +10,5 @@ namespace Anlagenverwaltung.Models.HardwareKomponenten
         public int Speicherkapazitaet { get; set; }
         public float Taktfrequenz { get; set; }
         public float Datenuebrtragungsrate { get; set; }
-
     }
 }
