@@ -5,13 +5,20 @@ using System.Web;
 
 namespace Anlagenverwaltung.Dto.HardwareKomponentenDto
 {
-    public class ComputerDto : HardwareDto
+    public class ComputerDto
     {
         public ComputerDto()
         {
             this.Festplatten = new HashSet<FestplatteDto>();
             this.Monitore = new HashSet<MonitorDto>();
         }
+
+        public byte Id { get; set; }
+
+        public string Hersteller { get; set; }
+        public string MacAdresse { get; set; }
+        public float Einkaufspreis { get; set; }
+        public DateTime Einkaufsdatum { get; set; }
 
         public ArbeitsspeicherDto Arbeitsspeicher { get; set; }
         public byte ArbeitsspeicherId { get; set; }

@@ -5,13 +5,20 @@ using System.Web;
 
 namespace Anlagenverwaltung.Models.HardwareKomponenten
 {
-    public class Computer : Hardware
+    public class Computer
     {
         public Computer()
         {
             this.Festplatten = new HashSet<Festplatte>();
             this.Monitore = new HashSet<Monitor>();
         }
+
+        public byte Id { get; set; }
+
+        public string Hersteller { get; set; }
+        public string MacAdresse { get; set; }
+        public float Einkaufspreis { get; set; }
+        public DateTime Einkaufsdatum { get; set; }
 
         public Arbeitsspeicher Arbeitsspeicher { get; set; }
         public byte ArbeitsspeicherId { get; set; }

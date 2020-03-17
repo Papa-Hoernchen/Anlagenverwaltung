@@ -7,13 +7,13 @@ namespace Anlagenverwaltung.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddSoftwareModels : IMigrationMetadata
+    public sealed partial class PopulateTastaturs : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSoftwareModels));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateTastaturs));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003131135262_AddSoftwareModels"; }
+            get { return "202003171746183_PopulateTastaturs"; }
         }
         
         string IMigrationMetadata.Source

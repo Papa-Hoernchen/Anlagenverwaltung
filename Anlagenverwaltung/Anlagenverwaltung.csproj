@@ -190,7 +190,6 @@
     <Compile Include="Dto\HardwareKomponentenDto\ArbeitsspeicherDto.cs" />
     <Compile Include="Dto\HardwareKomponentenDto\ComputerDto.cs" />
     <Compile Include="Dto\HardwareKomponentenDto\FestplatteDto.cs" />
-    <Compile Include="Dto\HardwareKomponentenDto\HardwareDto.cs" />
     <Compile Include="Dto\HardwareKomponentenDto\MausDto.cs" />
     <Compile Include="Dto\HardwareKomponentenDto\MonitorDto.cs" />
     <Compile Include="Dto\HardwareKomponentenDto\ProzessorDto.cs" />
@@ -202,20 +201,51 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003131129182_Init.cs" />
-    <Compile Include="Migrations\202003131129182_Init.Designer.cs">
-      <DependentUpon>202003131129182_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202003171654429_Init.cs" />
+    <Compile Include="Migrations\202003171654429_Init.Designer.cs">
+      <DependentUpon>202003171654429_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003131135262_AddSoftwareModels.cs" />
-    <Compile Include="Migrations\202003131135262_AddSoftwareModels.Designer.cs">
-      <DependentUpon>202003131135262_AddSoftwareModels.cs</DependentUpon>
+    <Compile Include="Migrations\202003171700309_PopulateArbeitsspeicher.cs" />
+    <Compile Include="Migrations\202003171700309_PopulateArbeitsspeicher.Designer.cs">
+      <DependentUpon>202003171700309_PopulateArbeitsspeicher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171704496_PopulateMaus.cs" />
+    <Compile Include="Migrations\202003171704496_PopulateMaus.Designer.cs">
+      <DependentUpon>202003171704496_PopulateMaus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171742045_PopulateProzessors.cs" />
+    <Compile Include="Migrations\202003171742045_PopulateProzessors.Designer.cs">
+      <DependentUpon>202003171742045_PopulateProzessors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171746183_PopulateTastaturs.cs" />
+    <Compile Include="Migrations\202003171746183_PopulateTastaturs.Designer.cs">
+      <DependentUpon>202003171746183_PopulateTastaturs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171750522_PopulateFestplatte.cs" />
+    <Compile Include="Migrations\202003171750522_PopulateFestplatte.Designer.cs">
+      <DependentUpon>202003171750522_PopulateFestplatte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171800114_PopulateComputer.cs" />
+    <Compile Include="Migrations\202003171800114_PopulateComputer.Designer.cs">
+      <DependentUpon>202003171800114_PopulateComputer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171808146_PopulateFestplatteComputers.cs" />
+    <Compile Include="Migrations\202003171808146_PopulateFestplatteComputers.Designer.cs">
+      <DependentUpon>202003171808146_PopulateFestplatteComputers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171809217_PopulateMonitors.cs" />
+    <Compile Include="Migrations\202003171809217_PopulateMonitors.Designer.cs">
+      <DependentUpon>202003171809217_PopulateMonitors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003171812480_PopulateMonitorComputers.cs" />
+    <Compile Include="Migrations\202003171812480_PopulateMonitorComputers.Designer.cs">
+      <DependentUpon>202003171812480_PopulateMonitorComputers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\HardwareKomponenten\Arbeitsspeicher.cs" />
     <Compile Include="Models\HardwareKomponenten\Computer.cs" />
     <Compile Include="Models\HardwareKomponenten\Festplatte.cs" />
-    <Compile Include="Models\HardwareKomponenten\Hardware.cs" />
     <Compile Include="Models\HardwareKomponenten\Maus.cs" />
     <Compile Include="Models\HardwareKomponenten\Monitor.cs" />
     <Compile Include="Models\HardwareKomponenten\Prozessor.cs" />
@@ -495,11 +525,35 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003131129182_Init.resx">
-      <DependentUpon>202003131129182_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003171654429_Init.resx">
+      <DependentUpon>202003171654429_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003131135262_AddSoftwareModels.resx">
-      <DependentUpon>202003131135262_AddSoftwareModels.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003171700309_PopulateArbeitsspeicher.resx">
+      <DependentUpon>202003171700309_PopulateArbeitsspeicher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171704496_PopulateMaus.resx">
+      <DependentUpon>202003171704496_PopulateMaus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171742045_PopulateProzessors.resx">
+      <DependentUpon>202003171742045_PopulateProzessors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171746183_PopulateTastaturs.resx">
+      <DependentUpon>202003171746183_PopulateTastaturs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171750522_PopulateFestplatte.resx">
+      <DependentUpon>202003171750522_PopulateFestplatte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171800114_PopulateComputer.resx">
+      <DependentUpon>202003171800114_PopulateComputer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171808146_PopulateFestplatteComputers.resx">
+      <DependentUpon>202003171808146_PopulateFestplatteComputers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171809217_PopulateMonitors.resx">
+      <DependentUpon>202003171809217_PopulateMonitors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171812480_PopulateMonitorComputers.resx">
+      <DependentUpon>202003171812480_PopulateMonitorComputers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -22,66 +22,13 @@ namespace Anlagenverwaltung.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Hardware> Hardwares { get; set; }
-        public DbSet<Software> Softwares { get; set; }
+        public DbSet<Computer> Computers { get; set; }
+        public DbSet<Festplatte> Festplatten { get; set; }
+        public DbSet<Monitor> Monitore { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //Konkrete Typen von Hardware
-            modelBuilder.Entity<Arbeitsspeicher>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Arbeitsspeicher");
-            });
-            modelBuilder.Entity<Computer>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Computer");
-            });
-            modelBuilder.Entity<Festplatte>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Festplatte");
-            });
-            modelBuilder.Entity<Maus>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Maus");
-            });
-            modelBuilder.Entity<Monitor>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Monitor");
-            });
-            modelBuilder.Entity<Prozessor>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Prozessor");
-            });
-            modelBuilder.Entity<Tastatur>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Tastatur");
-            });
-
-            //Konkrete Typen von Software
-            modelBuilder.Entity<Anwendungssoftware>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Anwendungssoftware");
-            });
-            modelBuilder.Entity<Systemsoftware>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Systemsoftware");
-            });
-            modelBuilder.Entity<Unterstuetzungssoftware>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Unterstuetzungssoftware");
-            });
 
         }
 

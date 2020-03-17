@@ -7,13 +7,13 @@ namespace Anlagenverwaltung.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Init : IMigrationMetadata
+    public sealed partial class PopulateFestplatteComputers : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateFestplatteComputers));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003131129182_Init"; }
+            get { return "202003171808146_PopulateFestplatteComputers"; }
         }
         
         string IMigrationMetadata.Source
