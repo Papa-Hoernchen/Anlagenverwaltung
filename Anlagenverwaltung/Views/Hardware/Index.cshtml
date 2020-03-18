@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Hardware>
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Computer>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 
 <h2>Hardware</h2>
 
-<table id="hardware" class="table table-bordered table-hover">
+<table id="computer" class="table table-bordered table-hover">
     <thead>
     <tr>
         <th>Computer</th>
@@ -21,15 +21,15 @@
 {
     <script>
         var table = $(document).ready(function () {
-            $("#customers").DataTable({
+            $("#computer").DataTable({
                 ajax: {
-                    url: "/api/customers",
+                    url: "/api/hardware",
                     dataSrc: ""
                 },
                 columns: [
                     {
                         data: "name",
-                        render: function (data, type, customer) {
+                        render: function (data, type, computer) {
                             return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
                         }
                     },
