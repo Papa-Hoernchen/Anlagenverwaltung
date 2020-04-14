@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Anlagenverwaltung.Models.HardwareKomponenten
 {
@@ -13,5 +11,10 @@ namespace Anlagenverwaltung.Models.HardwareKomponenten
         public float Einkaufspreis { get; set; }
         public DateTime Einkaufsdatum { get; set; }
         public string Art { get; set; }
+        [NotMapped]
+        public string HerstellerProdukt
+        {
+            get { return Hersteller + " " + Produktbezeichnung; }
+        }
     }
 }

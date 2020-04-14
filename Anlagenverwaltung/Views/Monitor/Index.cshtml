@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Monitor>
+
+@{
+    ViewBag.Title = "Monitor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Monitor</h2>
+<p>
+    @Html.ActionLink("Neuer Monitor", "New", "Monitor", null, new { @class = "btn btn-primary" })
+</p>
+<table id="monitors" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Produktbezeichnung</th>
+            <th>Art</th>
+            <th>Zoll</th>
+            <th>Pixel</th>
+            <th>Monitor Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#monitors").DataTable({
+                ajax: {
+                    url: "/api/monitor",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function (data, type, monitor) {
+                            return "<a href='/monitor/edit/" +
+                                data +
+                                "'>" +
+                                monitor.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Produktbezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Zoll"
+                    },
+                    {
+                        data: "Pixel"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-monitor-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#monitors").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diesen Monitor loeschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/monitor/" + button.attr("data-monitor-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

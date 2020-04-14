@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace Anlagenverwaltung
 {
@@ -15,8 +14,8 @@ namespace Anlagenverwaltung
                 "~/Scripts/respond.js",
                 "~/scripts/datatables/jquery.datatables.js",
                 "~/scripts/datatables/datatables.bootstrap.js",
-                "~/scripts/typeahead.bundle.js",
-                "~/scripts/toastr.js"
+                "~/scripts/toastr.js",
+                "~/scripts/tingle.js"
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,10 +29,11 @@ namespace Anlagenverwaltung
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/datatables/css/datatables.bootstrap.css",
-                "~/Content/typeahead.css",
                 "~/Content/site.css",
-                "~/Content/toastr.css"
+                "~/Content/toastr.css",
+                "~/Content/tingle.css"
             ));
         }
     }
 }
+

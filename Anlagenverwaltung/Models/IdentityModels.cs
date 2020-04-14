@@ -1,10 +1,10 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Anlagenverwaltung.Models.HardwareKomponenten;
-using Anlagenverwaltung.Models.SoftwareKomponenten;
+﻿using Anlagenverwaltung.Models.HardwareKomponenten;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Anlagenverwaltung.Models.SoftwareKomponenten;
 
 namespace Anlagenverwaltung.Models
 {
@@ -25,6 +25,21 @@ namespace Anlagenverwaltung.Models
         public DbSet<Computer> Computers { get; set; }
         public DbSet<Festplatte> Festplatten { get; set; }
         public DbSet<Monitor> Monitore { get; set; }
+        public DbSet<Arbeitsspeicher> Arbeitsspeichers { get; set; }
+        public DbSet<Maus> Maeuse { get; set; }
+        public DbSet<Prozessor> Prozessoren { get; set; }
+        public DbSet<Tastatur> Tastaturen { get; set; }
+
+        public DbSet<Betriebssystem> Betriebssysteme { get; set; }
+        public DbSet<Anwendungssoftware> Anwendungssoftwares { get; set; }
+        public DbSet<Unterstuetzungssoftware> Unterstuetzungssoftwares { get; set; }
+
+        public DbSet<SonstigeAnlage> SonstigeAnlagen { get; set; }
+
+        public DbSet<Konto> Konten { get; set; }
+        public DbSet<Abschreibung> Abschreibungen { get; set; }
+
+        public DbSet<Benutzer> Benutzers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

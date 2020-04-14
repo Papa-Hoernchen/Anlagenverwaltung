@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.SonstigeAnlage>
+
+@{
+    ViewBag.Title = "SonstigeAnlage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sonstige Anlagen</h2>
+<p>
+    @Html.ActionLink("Neue Anlage", "New", "SonstigeAnlage", null, new { @class = "btn btn-primary" })
+</p>
+<table id="sonstigeanlages" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Gegenstand</th>
+            <th>Bezeichnung</th>
+            <th>Einkaufsdatum</th>
+            <th>Einkaufspreis</th>
+            <th>Anlage Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#sonstigeanlages").DataTable({
+                ajax: {
+                    url: "/api/sonstigeAnlage",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function (data, type, sonstigeAnlage) {
+                            return "<a href='/sonstigeAnlage/edit/" +
+                                data +
+                                "'>" +
+                                sonstigeAnlage.Gegenstand +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Bezeichnung"
+                    },
+                    {
+                        data: "Einkaufsdatum",
+                        render: function(data, type) {
+                            var date=new Date(data);
+                            day=date.getDate();
+                            month=date.getMonth();
+                            month=month+1;
+                            if((String(day)).length==1)
+                                day='0'+day;
+                            if((String(month)).length==1)
+                                month='0'+month;
+
+                            dateT = day + '.' + month + '.' + date.getFullYear();
+                            return dateT;
+                        }
+                    },
+                    {
+                        data: "Einkaufspreis"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-sonstigeAnlage-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#sonstigeanlages").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diese Anlage löschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/sonstigeAnlage/" + button.attr("data-sonstigeAnlage-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

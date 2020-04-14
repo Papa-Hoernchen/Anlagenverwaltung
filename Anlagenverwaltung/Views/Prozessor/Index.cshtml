@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Prozessor>
+
+@{
+    ViewBag.Title = "Prozessor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Prozessor</h2>
+<p>
+    @Html.ActionLink("Neuer Prozessor", "New", "Prozessor", null, new { @class = "btn btn-primary" })
+</p>
+<table id="prozessors" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Produktbezeichnung</th>
+            <th>Kerne</th>
+            <th>Taktfrequenz</th>
+            <th>Prozessor Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#prozessors").DataTable({
+                ajax: {
+                    url: "/api/prozessor",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function (data, type, prozessor) {
+                            return "<a href='/prozessor/edit/" +
+                                data +
+                                "'>" +
+                                prozessor.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Produktbezeichnung"
+                    },
+                    {
+                        data: "Kerne"
+                    },
+                    {
+                        data: "Taktfrequenz"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-prozessor-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#prozessors").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diesen Prozessor loeschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/prozessor/" + button.attr("data-prozessor-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

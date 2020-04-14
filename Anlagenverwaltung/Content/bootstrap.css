@@ -3114,9 +3114,9 @@ fieldset[disabled] .btn-default.focus {
   background-color: #333;
 }
 .btn-primary {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
+    color: #fff;
+    background-color: red;
+    border-color: red;
 }
 .btn-primary:focus,
 .btn-primary.focus {
@@ -3126,8 +3126,8 @@ fieldset[disabled] .btn-default.focus {
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #286090;
-  border-color: #204d74;
+  background-color: black;
+  border-color: black;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -4486,10 +4486,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-right {
     float: right !important;
-    margin-right: -15px;
+    margin-right: 0px;
   }
   .navbar-right ~ .navbar-right {
-    margin-right: 0;
+    margin-right: 15;
   }
 }
 .navbar-default {

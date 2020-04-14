@@ -1,0 +1,26 @@
+﻿@model Anlagenverwaltung.ViewModels.ChangeRoleViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Benutzerrechte zuweisen</h2>
+
+@using (Html.BeginForm("Save", "Account"))
+{
+    @Html.ValidationSummary(true, "Bitte beheben Sie die folgenden Fehler.")
+    <div class="form-group">
+        @Html.Label("E-Mail")
+        @Html.DropDownListFor(m => m.UserId, new SelectList(Model.ApplicationUsers, "Id", "Email"), "Wählen Sie eine E-mail aus:", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.UserId)
+    </div>
+    <div class="form-group">
+        @Html.Label("Zugriffsrecht")
+        @Html.DropDownListFor(m => m.RoleName, new SelectList(Model.IdentityRoles, "Name", "Name"), "Wählen Sie ein Zugriffsrecht aus:", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RoleName)
+    </div>
+    @Html.HiddenFor(m => m.UserId)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+

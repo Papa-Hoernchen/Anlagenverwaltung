@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.SoftwareKomponenten.Anwendungssoftware>
+
+@{
+    ViewBag.Title = "Anwendungssoftware";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Anwendungssoftware</h2>
+<p>
+    @Html.ActionLink("Neue Anwendungssoftware", "New", "Anwendungssoftware", null, new { @class = "btn btn-primary" })
+</p>
+<table id="anwendungssoftwares" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Bezeichnung</th>
+            <th>Art</th>
+            <th>Lizenznummer</th>
+            <th>Anwendungssoftware Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#anwendungssoftwares").DataTable({
+                ajax: {
+                    url: "/api/anwendungssoftware",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function (data, type, anwendungssoftware) {
+                            return "<a href='/anwendungssoftware/edit/" +
+                                data +
+                                "'>" +
+                                anwendungssoftware.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Bezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Lizenznummer"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-anwendungssoftware-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#anwendungssoftwares").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diese Anwendungssoftware löschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/anwendungssoftware/" + button.attr("data-anwendungssoftware-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using Anlagenverwaltung.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Anlagenverwaltung.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using Anlagenverwaltung.ViewModels;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Anlagenverwaltung.Controllers
 {
@@ -155,6 +154,11 @@ namespace Anlagenverwaltung.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole("CanUseVerwaltung"));
+                    await UserManager.AddToRoleAsync(user.Id, "CanUseVerwaltung");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter https://go.microsoft.com/fwlink/?LinkID=320771
@@ -170,6 +174,24 @@ namespace Anlagenverwaltung.Controllers
 
             // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten; Formular erneut anzeigen.
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Save(ChangeRoleViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(viewModel.UserId);
+
+                var roles = await UserManager.GetRolesAsync(user.Id);
+                var rolesArray = roles.ToArray();
+                var result = await UserManager.RemoveFromRolesAsync(user.Id, rolesArray);
+
+                result = await UserManager.AddToRoleAsync(user.Id, viewModel.RoleName);
+
+            }
+            return RedirectToAction("Index", "ChangeRole");
         }
 
         //

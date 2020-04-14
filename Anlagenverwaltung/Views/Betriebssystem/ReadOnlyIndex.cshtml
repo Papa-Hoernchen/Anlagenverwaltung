@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.SoftwareKomponenten.Betriebssystem>
+
+@{
+    ViewBag.Title = "Betriebssystem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Betriebssystem</h2>
+<table id="betriebssystems" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Bezeichnung</th>
+            <th>Art</th>
+            <th>Lizenznummer</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#betriebssystems").DataTable({
+                ajax: {
+                    url: "/api/betriebssystem",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Hersteller"
+                    },
+                    {
+                        data: "Bezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Lizenznummer"
+                    }
+                ]
+            });
+        });
+
+    </script>
+}

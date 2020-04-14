@@ -1,0 +1,105 @@
+﻿@model Anlagenverwaltung.ViewModels.ComputerFormViewModel
+@{
+    /**/
+
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Computer bearbeiten/neu anlegen</h2>
+
+@using (Html.BeginForm("Save", "Computer"))
+{
+    @Html.ValidationSummary(true, "Bitte beheben Sie die folgenden Fehler.")
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.Hersteller)
+        @Html.TextBoxFor(m => m.Computer.Hersteller, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Computer.Hersteller)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.MacAdresse)
+        @Html.TextBoxFor(m => m.Computer.MacAdresse, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Computer.MacAdresse)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.ArbeitsspeicherId)
+        @Html.DropDownListFor(m => m.Computer.ArbeitsspeicherId, new SelectList(Model.Arbeitsspeichers, "Id", "HerstellerProdukt"), "Wählen Sie einen Arbeitsspeicher aus:", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Computer.ArbeitsspeicherId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.ProzessorId)
+        @Html.DropDownListFor(m => m.Computer.ProzessorId, new SelectList(Model.Prozessoren, "Id", "HerstellerProdukt"), "Wählen Sie einen Prozessor aus:", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Computer.ProzessorId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Festplatten, "Festplatte")
+        @Html.ListBoxFor(m => m.SelectedFestplatten, Model.Festplatten)
+        @Html.ValidationMessageFor(m => m.Festplatten)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.MausId)
+        @Html.DropDownListFor(m => m.Computer.MausId, new SelectList(Model.Mauese, "Id", "HerstellerProdukt"), "Wählen Sie eine Maus aus:", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Computer.MausId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Monitore, "Monitore")
+        @Html.ListBoxFor(m => m.SelectedMonitore, Model.Monitore)
+        @Html.ValidationMessageFor(m => m.Monitore)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.TastaturId)
+        @Html.DropDownListFor(m => m.Computer.TastaturId, new SelectList(Model.Tastaturen, "Id", "HerstellerProdukt"), "Wählen Sie eine Tastatur aus:", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Computer.TastaturId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.BetriebssystemId)
+        @Html.DropDownListFor(m => m.Computer.BetriebssystemId, new SelectList(Model.Betriebssysteme, "Id", "HerstellerProdukt"), "Wählen Sie ein Betriebssystem aus:", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Computer.BetriebssystemId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Anwendungssoftware, "Anwendungssoftware")
+        @Html.ListBoxFor(m => m.SelectedAnwendungsSoftware, Model.Anwendungssoftware)
+        @Html.ValidationMessageFor(m => m.Anwendungssoftware)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Unterstuetzungssoftware, "Unterstützungssoftware")
+        @Html.ListBoxFor(m => m.SelectedUnterstuetzungsSoftware, Model.Unterstuetzungssoftware)
+        @Html.ValidationMessageFor(m => m.Unterstuetzungssoftware)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.Einkaufspreis)
+        @Html.EditorFor(model => model.Computer.Einkaufspreis, new { htmlAttributes = new { @type = "float", @min = "0.00", @step = "0.01", @value = "0" } })
+        @Html.Label("€")
+        @Html.ValidationMessageFor(m => m.Computer.Einkaufspreis)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Computer.Einkaufsdatum)
+        @Html.TextBoxFor(m => m.Computer.Einkaufsdatum, "{0:d MMM yyyy}", new { @class = "datepicker" })
+        @Html.ValidationMessageFor(m => m.Computer.Einkaufsdatum)
+    </div>
+
+    @Html.HiddenFor(m => m.Computer.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "2000:2025",
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar'></i>"
+            });
+        });
+    </script>
+}

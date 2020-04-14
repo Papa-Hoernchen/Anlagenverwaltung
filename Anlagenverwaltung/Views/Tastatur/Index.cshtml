@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Tastatur>
+
+@{
+    ViewBag.Title = "Tastatur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tastatur</h2>
+<p>
+    @Html.ActionLink("Neue Tastatur", "New", "Tastatur", null, new { @class = "btn btn-primary" })
+</p>
+<table id="tastaturs" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Produktbezeichnung</th>
+            <th>Art</th>
+            <th>Tastatur Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#tastaturs").DataTable({
+                ajax: {
+                    url: "/api/tastatur",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function (data, type, tastatur) {
+                            return "<a href='/tastatur/edit/" +
+                                data +
+                                "'>" +
+                                tastatur.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Produktbezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-tastatur-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#tastaturs").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diese Tastatur loeschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/tastatur/" + button.attr("data-tastatur-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

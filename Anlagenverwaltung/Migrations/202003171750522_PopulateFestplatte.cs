@@ -1,8 +1,7 @@
 namespace Anlagenverwaltung.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class PopulateFestplatte : DbMigration
     {
         public override void Up()

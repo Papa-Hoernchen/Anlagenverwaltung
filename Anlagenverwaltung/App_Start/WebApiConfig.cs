@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
 using System.Web.Http;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Anlagenverwaltung
 {

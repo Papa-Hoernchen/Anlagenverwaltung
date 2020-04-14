@@ -1,4 +1,5 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -6,15 +7,52 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Anlagenverwaltung", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Hardware", "Index", "Hardware")</li>
-                <li>@Html.ActionLink("Software", "Index", "Software")</li>
-                <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
+    </div>
+    <div class="mynav_navbar">
+        @Html.ActionLink("Anlagenverwaltung", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="mynav_dropdown">
+            <button class="mynav_dropbtn">
+                Hardware
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="mynav_dropdown-content">
+                @Html.ActionLink("Computer", "Index", "Computer")
+                @Html.ActionLink("Arbeitsspeicher", "Index", "Arbeitsspeicher")
+                @Html.ActionLink("Festplatten", "Index", "Festplatte")
+                @Html.ActionLink("Maus", "Index", "Maus")
+                @Html.ActionLink("Monitor", "Index", "Monitor")
+                @Html.ActionLink("Prozessor", "Index", "Prozessor")
+                @Html.ActionLink("Tastatur", "Index", "Tastatur")
+            </div>
         </div>
+        <div class="mynav_dropdown">
+            <button class="mynav_dropbtn">
+                Software
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="mynav_dropdown-content">
+                @Html.ActionLink("Betriebssysteme", "Index", "Betriebssystem")
+                @Html.ActionLink("Anwendungssoftware", "Index", "Anwendungssoftware")
+                @Html.ActionLink("Unterstützungssoftware", "Index", "Unterstuetzungssoftware")
+            </div>
+        </div>
+        @Html.ActionLink("Sonstige Anlagen", "Index", "SonstigeAnlage")
+        <div class="mynav_dropdown">
+            <button class="mynav_dropbtn">
+                Abschreibungsverzeichnis
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="mynav_dropdown-content">
+                @Html.ActionLink("27 EDV-Software", "IndexSoftware", "Abschreibung")
+                @Html.ActionLink("410 Geschäftsausstattung", "IndexGeschaeftsausstattung", "Abschreibung")
+                @Html.ActionLink("420 Büroeinrichtung", "IndexBueroeinrichtung", "Abschreibung")
+                @Html.ActionLink("320 Pkw", "IndexPKW", "Abschreibung")
+                @Html.ActionLink("500 Anteil AO", "IndexAnteilAO", "Abschreibung")
+                @Html.ActionLink("Gesamt", "IndexGesamt", "Abschreibung")
+            </div>
+        </div>
+        @Html.ActionLink("Benutzerrechte", "Index", "ChangeRole")
+        @Html.Partial("_LoginPartial")
     </div>
 </div>

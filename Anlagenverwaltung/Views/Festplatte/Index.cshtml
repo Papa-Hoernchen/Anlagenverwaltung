@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Festplatte>
+
+@{
+    ViewBag.Title = "Festplatte";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Festplatte</h2>
+<p>
+        @Html.ActionLink("Neue Festplatte", "New", "Festplatte", null, new { @class = "btn btn-primary" })
+    </p>
+<table id="festplattes" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Produktbezeichnung</th>
+            <th>Art</th>
+            <th>Speicherkapazität</th>
+            <th>Schnittstelle</th>
+            <th>Festplatte Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#festplattes").DataTable({
+                ajax: {
+                    url: "/api/festplatte",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function(data, type, festplatte) {
+                            return "<a href='/festplatte/edit/" +
+                                data +
+                                "'>" +
+                                festplatte.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Produktbezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Speicherkapazitaet"
+                    },
+                    {
+                        data: "Schnittstelle"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-festplatte-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#festplattes").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diese Festplatte loeschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/festplatte/" + button.attr("data-festplatte-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

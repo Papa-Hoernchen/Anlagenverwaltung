@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Anlagenverwaltung.Models.HardwareKomponenten
 {
@@ -12,7 +12,10 @@ namespace Anlagenverwaltung.Models.HardwareKomponenten
             this.Computers = new HashSet<Computer>();
         }
 
-        public byte Id { get; set; }
+        [Display(Name = "Festplatte")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+
         public string Hersteller { get; set; }
         public string Produktbezeichnung { get; set; }
         public float Einkaufspreis { get; set; }
@@ -21,6 +24,12 @@ namespace Anlagenverwaltung.Models.HardwareKomponenten
         public string Art { get; set; }
         public int Speicherkapazitaet { get; set; }
         public string Schnittstelle { get; set; }
+
+        [NotMapped]
+        public string HerstellerProdukt
+        {
+            get { return Hersteller + " " + Produktbezeichnung; }
+        }
 
         public virtual ICollection<Computer> Computers { get; set; }
     }

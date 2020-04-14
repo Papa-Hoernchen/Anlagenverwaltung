@@ -1,0 +1,180 @@
+﻿@model Anlagenverwaltung.ViewModels.AbschreibungViewModel
+
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "410 Geschäftsausstattung";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" />
+
+
+<h2>410 Geschäftsausstattung</h2>
+<label for="yearpicker">Abschreibungsjahr:</label>
+<select name="yearpicker" id="yearpicker"></select>
+
+<input id="btnSubmit" type="submit" value="Release" class="btn btn-primary" />
+
+
+<table id="abschreibungs" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>KontoNr</th>
+            <th>Bezeichnung</th>
+            <th>Tag der Anschaffung</th>
+            <th>Kosten der Anschaffung</th>
+            <th>ND Jahre</th>
+            <th>AfA %</th>
+            <th id="beginnBuchwert"></th>
+            <th>Abschreibung Gesamt</th>
+            <th id="endeBuchwert"></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot>
+        <tr style='text-align:center;'>
+            <th colspan="3">Total</th>
+            <th id="total_abschreibung"></th>
+            <th></th>
+            <th></th>
+            <th id="total_buchwertBegin"></th>
+            <th id="total_abschreibungssatz"></th>
+            <th id="total_buchwertEnde"></th>
+        </tr>
+
+    </tfoot>
+</table>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/b-1.6.1/b-html5-1.6.1/datatables.min.js"></script>
+
+    <script>
+        jQuery.fn.dataTable.Api.register('sum()', function () {
+            return this.flatten().reduce(function (a, b) {
+                if (typeof a === 'string') {
+                    a = a.replace(/[^\d.-]/g, '') * 1;
+                }
+                if (typeof b === 'string') {
+                    b = b.replace(/[^\d.-]/g, '') * 1;
+                }
+
+                return a + b;
+            }, 0);
+        });
+
+        $(document).ready(function () {
+            var table = $("#abschreibungs").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+                    }
+                ],
+                paging: false,
+                ajax: {
+                    url: "/api/AbschreibungAusstattung?year=" + $('#yearpicker :selected').text(),
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "KontoNr"
+                    },
+                    {
+                        data: "Name"
+                    },
+                    {
+                        data: "Anschaffungsdatum",
+                        render: function (data, type) {
+                            var date = new Date(data);
+                            day = date.getDate();
+                            month = date.getMonth();
+                            month = month + 1;
+                            if ((String(day)).length == 1)
+                                day = '0' + day;
+                            if ((String(month)).length == 1)
+                                month = '0' + month;
+
+                            dateT = day + '.' + month + '.' + date.getFullYear();
+                            return dateT;
+                        }
+                    },
+                    {
+                        data: "Anschaffungskosten"
+                    },
+                    {
+                        data: "Nutzungsdauer"
+                    },
+                    {
+                        data: "AfaProzent"
+                    },
+                    {
+                        data: "BuchwertBegin"
+                    },
+                    {
+                        data: "Abschreibungssatz"
+                    },
+                    {
+                        data: "BuchwertEnde"
+                    },
+
+                ],
+
+                drawCallback: function () {
+                    var api = this.api();
+                    $('#total_abschreibung').html(
+                        api.column(3, { page: 'current' }).data().sum().toFixed(2)
+                    );
+                    $('#total_buchwertBegin').html(
+                        api.column(6, { page: 'current' }).data().sum().toFixed(2)
+                    );
+
+                    $('#total_abschreibungssatz').html(
+                        api.column(7, { page: 'current' }).data().sum().toFixed(2)
+                    );
+
+                    $('#total_buchwertEnde').html(
+                        api.column(8, { page: 'current' }).data().sum().toFixed(2)
+                    );
+                }
+
+
+
+            });
+
+        });
+
+
+
+        for (i = new Date().getFullYear(); i > 1900; i--) {
+            $('#yearpicker').append($('<option />').val(i).html(i));
+        }
+
+        $('#beginnBuchwert').append('Buchwert 01.01.').append($('#yearpicker :selected').text());
+        $('#endeBuchwert').append('Buchwert 31.12.').append($('#yearpicker :selected').text());
+
+
+        $("#btnSubmit").on("click", function (event) {
+            $('#abschreibungs').DataTable().ajax.url("/api/AbschreibungAusstattung?year=" + $('#yearpicker :selected').text()).load();
+            $('#beginnBuchwert').empty();
+            $('#beginnBuchwert').append('Buchwert 01.01.').append($('#yearpicker :selected').text());
+
+            $('#endeBuchwert').empty();
+            $('#endeBuchwert').append('Buchwert 31.12.').append($('#yearpicker :selected').text());
+        });
+
+    </script>
+}

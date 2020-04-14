@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Anlagenverwaltung.Dto.SoftwareKomponentenDto;
 
 namespace Anlagenverwaltung.Dto.HardwareKomponentenDto
 {
@@ -11,9 +10,11 @@ namespace Anlagenverwaltung.Dto.HardwareKomponentenDto
         {
             this.Festplatten = new HashSet<FestplatteDto>();
             this.Monitore = new HashSet<MonitorDto>();
+            this.Anwendungssoftware = new HashSet<AnwendungssoftwareDto>();
+            this.Unterstuetzungssoftware = new HashSet<UnterstuetzungssoftwareDto>();
         }
 
-        public byte Id { get; set; }
+        public int Id { get; set; }
 
         public string Hersteller { get; set; }
         public string MacAdresse { get; set; }
@@ -32,7 +33,19 @@ namespace Anlagenverwaltung.Dto.HardwareKomponentenDto
         public TastaturDto Tastatur { get; set; }
         public byte TastaturId { get; set; }
 
+        public BetriebssystemDto Betriebssystem { get; set; }
+        public int BetriebssystemId { get; set; }
+
         public virtual ICollection<FestplatteDto> Festplatten { get; set; }
         public virtual ICollection<MonitorDto> Monitore { get; set; }
+
+        public virtual ICollection<AnwendungssoftwareDto> Anwendungssoftware { get; set; }
+        public virtual ICollection<UnterstuetzungssoftwareDto> Unterstuetzungssoftware { get; set; }
+
+        public KontoDto Konto { get; set; }
+        public int? KontoId { get; set; }
+
+        public BenutzerDto Benutzer { get; set; }
+        public int? BenutzerId { get; set; }
     }
 }

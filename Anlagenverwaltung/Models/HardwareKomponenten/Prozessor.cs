@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Anlagenverwaltung.Models.HardwareKomponenten
 {
@@ -14,6 +12,12 @@ namespace Anlagenverwaltung.Models.HardwareKomponenten
         public DateTime Einkaufsdatum { get; set; }
         public int Kerne { get; set; }
         public float Taktfrequenz { get; set; }
+        [NotMapped]
+        public string HerstellerProdukt
+        {
+            get { return Hersteller + " " + Produktbezeichnung;}
+
+        }
 
     }
 }

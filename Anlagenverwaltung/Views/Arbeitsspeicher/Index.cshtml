@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Arbeitsspeicher>
+
+@{
+    ViewBag.Title = "Arbeitsspeicher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Arbeitsspeicher</h2>
+<p>
+    @Html.ActionLink("Neuer Arbeitsspeicher", "New", "Arbeitsspeicher", null, new { @class = "btn btn-primary" })
+</p>
+<table id="arbeitsspeichers" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Produktbezeichnung</th>
+            <th>Speicherkapazität</th>
+            <th>Taktfrequenz</th>
+            <th>Arbeitsspeicher Löschen</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#arbeitsspeichers").DataTable({
+                ajax: {
+                    url: "/api/arbeitsspeicher",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function(data, type, arbeitsspeicher) {
+                            return "<a href='/arbeitsspeicher/edit/" +
+                                data +
+                                "'>" +
+                                arbeitsspeicher.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Produktbezeichnung"
+                    },
+                    {
+                        data: "Speicherkapazitaet"
+                    },
+                    {
+                        data: "Taktfrequenz"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-arbeitsspeicher-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#arbeitsspeichers").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diesen Arbeitsspeicher loeschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/arbeitsspeicher/" + button.attr("data-arbeitsspeicher-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

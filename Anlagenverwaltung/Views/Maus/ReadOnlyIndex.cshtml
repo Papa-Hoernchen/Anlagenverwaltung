@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Maus>
+
+@{
+    ViewBag.Title = "Maus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Maus</h2>
+<table id="maus" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Produktbezeichnung</th>
+            <th>Art</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#maus").DataTable({
+                ajax: {
+                    url: "/api/maus",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Hersteller"
+                    },
+                    {
+                        data: "Produktbezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    }
+                ]
+            });
+        });
+
+    </script>
+}

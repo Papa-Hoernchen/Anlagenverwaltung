@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.HardwareKomponenten.Maus>
+
+@{
+    ViewBag.Title = "Maus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Maus</h2>
+<p>
+        @Html.ActionLink("Neue Maus", "New", "Maus", null, new { @class = "btn btn-primary" })
+    </p>
+<table id="maus" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Produktbezeichnung</th>
+            <th>Art</th>
+            <th>Maus Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#maus").DataTable({
+                ajax: {
+                    url: "/api/maus",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function(data, type, maus) {
+                            return "<a href='/maus/edit/" +
+                                data +
+                                "'>" +
+                                maus.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Produktbezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-maus-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#maus").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diese Maus loeschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/maus/" + button.attr("data-maus-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.SoftwareKomponenten.Unterstuetzungssoftware>
+
+@{
+    ViewBag.Title = "Unterstuetzungssoftware";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Unterstützungssoftware</h2>
+<p>
+    @Html.ActionLink("Neue Unterstützungssoftware", "New", "Unterstuetzungssoftware", null, new { @class = "btn btn-primary" })
+</p>
+<table id="unterstuetzungssoftwares" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Bezeichnung</th>
+            <th>Art</th>
+            <th>Lizenznummer</th>
+            <th>Unterstützungssoftware Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#unterstuetzungssoftwares").DataTable({
+                ajax: {
+                    url: "/api/unterstuetzungssoftware",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function (data, type, unterstuetzungssoftware) {
+                            return "<a href='/unterstuetzungssoftware/edit/" +
+                                data +
+                                "'>" +
+                                unterstuetzungssoftware.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Bezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Lizenznummer"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-unterstuetzungssoftware-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#unterstuetzungssoftwares").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie diese Unterstützungssoftware löschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/unterstuetzungssoftware/" + button.attr("data-unterstuetzungssoftware-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}

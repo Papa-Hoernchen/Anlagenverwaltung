@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Anlagenverwaltung.Models.SoftwareKomponenten.Betriebssystem>
+
+@{
+    ViewBag.Title = "Betriebssystem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Betriebssystem</h2>
+<p>
+    @Html.ActionLink("Neues Betriebssystem", "New", "Betriebssystem", null, new { @class = "btn btn-primary" })
+</p>
+<table id="betriebssystems" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Hersteller</th>
+            <th>Bezeichnung</th>
+            <th>Art</th>
+            <th>Lizenznummer</th>
+            <th>Betriebssystem Löschen</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            var table = $("#betriebssystems").DataTable({
+                ajax: {
+                    url: "/api/betriebssystem",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Id",
+                        render: function(data, type, betriebssystem) {
+                            return "<a href='/betriebssystem/edit/" +
+                                data +
+                                "'>" +
+                                betriebssystem.Hersteller +
+                                "</a>";
+                        }
+                    },
+                    {
+                        data: "Bezeichnung"
+                    },
+                    {
+                        data: "Art"
+                    },
+                    {
+                        data: "Lizenznummer"
+                    },
+                    {
+                        data: "Id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-betriebssystem-id=" +
+                                data +
+                                ">Löschen</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#betriebssystems").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Sind Sie sich sicher, dass Sie dieses Betriebssystem löschen wollen?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/betriebssystem/" + button.attr("data-betriebssystem-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+
+    </script>
+}
