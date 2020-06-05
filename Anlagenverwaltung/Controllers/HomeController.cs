@@ -7,6 +7,8 @@ namespace Anlagenverwaltung.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Title = "Home";
+
             return View();
         }
 
