@@ -3,10 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Anlagenverwaltung</title>
+    @if (ViewBag.Title != null)
+    {
+        <title>@ViewBag.Title - Anlagenverwaltung</title>
+    }
+    else
+    {
+        <title>Anlagenverwaltung</title>
+    }
+
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
@@ -18,14 +27,14 @@
             background-color: #333;
         }
 
-        .mynav_navbar a {
-            float: left;
-            font-size: 16px;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
+            .mynav_navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
 
         .mynav_dropdown {
             float: left;
